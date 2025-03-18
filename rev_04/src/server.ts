@@ -1,15 +1,13 @@
-import express from "express";
-import { PORT } from "./constants/env";
+import "dotenv/config";
+import { NODE_ENV, PORT } from "./constants/env";
 import connectDB from "./db";
+import app from "./app";
 
-const app = express();
 
-app.get("/", (req, res) => {
-  res.status(200).json({ status: "Healthy" });
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(
+      `Server is listening on port ${PORT} in ${NODE_ENV} environment`
+    );
+  });
 });
-
-connectDB().then(()=>{
-    app.listen(PORT, ()=>{
-        console.log(`Server is listening on ${PORT}`)
-    })
-})
